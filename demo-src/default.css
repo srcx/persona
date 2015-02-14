@@ -1,0 +1,37 @@
+/* $Id: default.css,v 1.1 2004/12/16 14:02:46 stepan Exp $ */
+
+*.menu { background-color: yellow; font-family: monospace }
+*.menu *.active { background-color: white }
+div.menu { display: table; table-layout: fixed; width: 100% }
+*.menu a { display: table-cell; text-align: center; }
+*.menu a:link { color: black }
+*.menu a:hover { background-color: red }
+a:hover { background-color: yellow }
+h1 { font-variant: small-caps }
+*.footer { background-color: yellow; font-family: monospace }
+*.footer a:link { color: black }
+*.footer a:hover { background-color: red }
+*.location { background-color: yellow; font-family: monospace }
+*.location a:link { color: black }
+*.location a:hover { background-color: red }
+*.resourcelist a:link { color: black }
+*.resourcelist li:first-line { font-weight: bold }
+*.resourcelist li { margin: 1em }
+*.description { font-style: italic }
+form { border: solid; background-color: #EEEEEE; }
+form div { margin: 1em }
+*.fullwidth { width: 100% }
+*.halfwidth { width: 50% }
+*.width70 { width: 70% }
+*.languages { float: right; font-family: monospace; background-color: yellow; }
+*.languages *.active { background-color: white }
+*.languages a:link { color: black }
+*.languages a:hover { background-color: red }
+*.align_justify { text-align: justify }
+h1.align_center, h2.align_center, h3.align_center, p.align_center { text-align: center }
+*.align_center { margin-left: auto; margin-right: auto }
+img.align_center { display: block; margin-left: auto; margin-right: auto }
+p.align_right { text-align: right }
+caption { font-style: italic }
+*.newslist li { margin: 1em }
+*.newsdate { color: red; font-style: italic }

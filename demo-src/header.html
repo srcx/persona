@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<? my $ret = '&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'.language().'"&gt;'; ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<?/?>
+<!-- $Id: header.html,v 1.1 2004/12/16 14:02:46 stepan Exp $ -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2"/>
+    <? my $ret = '&lt;meta http-equiv="Content-Language" content="'.language().'"/&gt;'; /?>
+    <title><? data('main_title') ?>Main Title<?/?> - <? data('title') ?>Title<?/?></title>
+    <? my $ret = '&lt;meta name="author" content="'.data('author').'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="copyright" content="&copy;'.data('copyright_date').' '.data('author').'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="keywords" content="'.data('keywords').'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="description" content="'.data('description').'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="date" content="'.localtime().'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="generator" content="'.data('banner').'"/&gt;'; /?>
+    <? my $ret = '&lt;meta name="robots" content="'.data('robots_control').'"/&gt;'; /?>
+    <? my $ret = '&lt;link rel="stylesheet" type="text/css" href="'.location('stylesheet').'"/&gt;'; ?>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <?/?>
+  </head>
+  <body>
+    <div class="menu">
+      <? my $ret = '';
+         foreach $res (matching('main_menu', 1)) {
+           $ret .= '&lt;a';
+	   my @path = respath();
+	   my $top = (@path > 1) ? $path[1] : $path[0];
+           if ($res eq $top) {
+             $ret .= ' class="active"';
+           }
+           $ret .= ' href="'.location($res).'"&gt;'.data('name', $res).'&lt;/a&gt;'."\n";
+         }
+         $ret;
+      ?>
+      <a href="home.html">Home</a>
+      <a href="about.html">About</a>
+      <?/?>
+    </div>
+    <hr/>
+    <div class="location">
+      <? my @ret = ();
+         foreach $res (respath()) {
+           push (@ret, '&lt;a href="'.location($res).'"&gt;'.data('name', $res).'&lt;/a&gt;');
+         }
+         my $ret = join(' / ', @ret);
+         $ret;
+      ?>
+      <a href="home.html">Home</a> / <a href="about.html">About</a>
+      <?/?>
+    </div>
+    <div class="languages">
+      <? my $ret = '';
+         foreach $lang (reslang()) {
+           $ret .= '&lt;a';
+           if ($lang eq language()) {
+             $ret .= ' class="active"';
+           }
+           $ret .= ' href="'.location(resource(), $lang).'"&gt;'.data('language_'.$lang).'&lt;/a&gt;'."\n";
+         }
+         $ret;
+      ?>
+      <a href="about.html">Czech</a>
+      <a class="active" href="en/about.html">English</a>
+      <?/?>
+    </div>
+    <h1><? data('title') /?></h1>
+<? '' ?>
+  </body>
+</html>
+<?/?>

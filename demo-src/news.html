@@ -1,0 +1,39 @@
+<? include('header') ?>
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>Home EN</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2"/>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+  </head>
+  <body>
+<?/?>
+<!-- $Id: news.html,v 1.1 2004/12/16 14:02:46 stepan Exp $ -->
+    <p>
+      <? html_a (location ('news_rss'), (language () eq 'en') ? 'News in RSS format' : 'Novinky ve formátu RSS') ?>
+      News in RSS format
+      <?/?>
+    </p>
+    <ul class="newslist">
+      <? my $ret = '';
+         my $i = 1;
+         foreach $res (sort { $b cmp $a } matching('news_page', 1)) {
+           last if ($i++ == 10);
+           $ret .= html_li().'&lt;span class="newsdate"&gt;';
+           $ret .= data ('date', $res);
+           $ret .= '&lt;/span&gt; ';
+           my $desc = data ('desc', $res);
+           $desc =~ s/@([^:@]*)(?::([^@]*))?@/html_a (location ($1), (defined $2) ? $2 : data ('title', $1))/ge;
+           $ret .= $desc;
+           $ret .= '&lt;/li&gt;'."\n";
+         }
+         $ret;
+      ?>
+      <li><span class="newsdate">2004/01/03:</span> New version 0.1 of <a href="xxx.html">UPE</a>.</li>
+      <?/?>
+    </ul>
+<? include('footer') ?>
+  </body>
+</html>
+<?/?>

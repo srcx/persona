@@ -1,0 +1,29 @@
+<!-- $Id: footer.html,v 1.1 2004/12/16 14:02:46 stepan Exp $ -->
+<? '' ?>
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>Footer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2"/>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+  </head>
+  <body>
+<?/?>
+    <div class="location">
+      <? my @ret = ();
+         foreach $res (respath()) {
+           push (@ret, '&lt;a href="'.location($res).'"&gt;'.data('name', $res).'&lt;/a&gt;');
+         }
+         my $ret = join(' / ', @ret);
+         $ret;
+      ?>
+      <a href="home.html">Home</a> / <a href="about.html">About</a>
+      <?/?>
+    </div>
+    <hr/>
+    <div class="footer">
+      &copy;<? data('copyright_date') /?>
+    </div>
+  </body>
+</html>

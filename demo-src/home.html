@@ -1,0 +1,54 @@
+<? include('header') ?>
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>Home EN</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2"/>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+  </head>
+  <body>
+<?/?>
+<!-- $Id: home.html,v 1.1 2004/12/16 14:02:46 stepan Exp $ -->
+    <p>
+    <? data ('welcome_para') ?>
+    Welcome.
+    <?/?>
+    </p>
+    <ul class="resourcelist">
+      <? my $ret = '';
+         foreach $res (matching('home_page', 1)) {
+           $ret .= '&lt;li&gt;&lt;a href="'.location($res).'"&gt;'.data('title', $res).'&lt;/a&gt;';
+           my $has_local_lang = 0;
+           foreach $lang (@{data('languages', $res)}) {
+             if ($lang eq language()) {
+               $has_local_lang = 1;
+               last;
+             }
+           }
+           if (!$has_local_lang) {
+             $ret .= ' (';
+             foreach $lang (@{data('languages', $res)}) {
+               $ret .= data('text_only_'.$lang);
+             }
+             $ret .= ')';
+           }
+           $ret .= "&lt;br/&gt;\n";
+           $ret .= '&lt;p class="description"&gt;'."\n";
+           $ret .= data('desc', $res)."\n";
+           $ret .= '&lt;/p&gt;'."\n";
+           $ret .= '&lt;/li&gt;'."\n";
+         }
+         $ret;
+      ?>
+      <li><a href="about.html">About</a><br/>
+      <p class="description">
+      About page.
+      </p>
+      </li>
+      <?/?>
+    </ul>
+<? include('footer') ?>
+  </body>
+</html>
+<?/?>

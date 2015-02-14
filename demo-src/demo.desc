@@ -1,0 +1,290 @@
+# $Id: demo.desc,v 1.1 2004/12/16 14:02:46 stepan Exp $
+
+use POSIX qw(strftime);
+
+$resource{'global'} = {
+  'type' => 'global',
+  'main_title_en' => 'Demo Pages',
+  'main_title_cs' => 'Ukázkové stránky',
+  'language_en' => 'English',
+  'language_cs' => 'Èesky',
+  'resource_order' => [
+    'home', 'news', 'sitemap', 'about',
+  ],
+  'copyright_date' => '2003-2004',
+  'keywords_en' => 'demonstration, Persona',
+  'keywords_cs' => sub { get_data_key ($_[0], 'keywords', 'en').', ukázka' },
+  'author_en' => 'Stepan Roh',
+  'author_cs' => '©tìpán Roh',
+  'description' => sub {
+    my $title = get_data_key ($_[0], 'title', $_[2]);
+    my $desc = get_data_key ($_[0], 'desc', $_[2]);
+    if (!$desc) {
+      $desc = get_data_key ($_[0], '_description', $_[2]);
+    }
+    if (!$title || ($title eq $desc)) {
+      return $desc;
+    }
+    return $title.' - '.$desc;
+  },
+  '_description_en' => 'Persona demonstration pages',
+  '_description_cs' => 'Ukázkové stránky Persony',
+  'robots_control' => 'index, follow',
+  'comparator_regexp' => '(<meta name="(date|generator)"[^>]*/>)|(<lastBuildDate>.*?</lastBuildDate>)|(<!--\s*\$[I][d]:[^$]*\$\s*-->)',
+  'text_only_en_cs' => 'anglicky',
+  'text_only_cs_en' => 'czech',
+  'datetime_format_en' => '%F %T',
+  'datetime_format_cs' => '%e.%m.%Y %T',
+  'webmaster' => 'webmaster@demo.web.example',
+  'deployment_url' => 'http://demo.web.example/',
+};
+$resource{'header'} = {
+  'type' => 'template',
+  'source' => { 'file' => 'header.html' },
+};
+$resource{'footer'} = {
+  'type' => 'template',
+  'source' => { 'file' => 'footer.html' },
+};
+$resource{'stylesheet'} = {
+  'type' => 'file',
+  'source' => { 'file' => 'default.css', 'dest' => 'style/default.css' },
+};
+$resource{'home'} = {
+  'type' => 'template',
+  'main_menu' => 1,
+  'languages' => [ 'cs', 'en' ],
+  'source_cs' => { 'file' => 'home.html', 'dest' => 'index.html' },
+  'source_en' => { 'file' => 'home.html', 'dest' => 'en/index.html' },
+  'name_en' => 'Home',
+  'name_cs' => 'Domù',
+  'title_en' => 'Welcome',
+  'title_cs' => 'Vítejte',
+  'welcome_para_en' => 'Welcome to Persona demo pages.',
+  'welcome_para_cs' => 'Vítejte na ukázkové stránky Persony.',
+};
+$resource{'sitemap'} = {
+  'type' => 'template',
+  'main_menu' => 1,
+  'parent' => 'home',
+  'languages' => [ 'cs', 'en' ],
+  'source_cs' => { 'file' => 'sitemap.html', 'dest' => 'sitemap.html' },
+  'source_en' => { 'file' => 'sitemap.html', 'dest' => 'en/sitemap.html' },
+  'name_en' => 'Site Map',
+  'name_cs' => 'Mapa stránek',
+  'title_en' => 'Site Map',
+  'title_cs' => 'Mapa stránek',
+  'desc_en' => 'Site Map',
+  'desc_cs' => 'Mapa stránek',
+};
+$resource{'about'} = {
+  'type' => 'template',
+  'main_menu' => 1,
+  'home_page' => 1,
+  'parent' => 'home',
+  'languages' => [ 'cs', 'en' ],
+  'source_cs' => { 'file' => 'about_cs.html', 'dest' => 'about.html' },
+  'source_en' => { 'file' => 'about_en.html', 'dest' => 'en/about.html' },
+  'name_en' => 'About',
+  'name_cs' => 'O',
+  'title_en' => 'About',
+  'title_cs' => 'O',
+  'desc_en' => 'A few words about these pages.',
+  'desc_cs' => 'Pár slov o tìchto stránkách.',
+  'keywords' => 'about',
+};
+$resource{'news'} = {
+  'type' => 'template',
+  'main_menu' => 1,
+  'home_page' => 1,
+  'parent' => 'home',
+  'languages' => [ 'cs', 'en' ],
+  'source_cs' => { 'file' => 'news.html', 'dest' => 'news.html' },
+  'source_en' => { 'file' => 'news.html', 'dest' => 'en/news.html' },
+  'name_en' => 'News',
+  'name_cs' => 'Novinky',
+  'title_en' => 'News',
+  'title_cs' => 'Novinky',
+  'desc_en' => 'What\'s new.',
+  'desc_cs' => 'Co je nového.',
+  'keywords_en' => 'news',
+  'keywords_cs' => 'novinky',
+};
+$resource{'news_rss'} = {
+  'type' => 'template',
+  'hidden' => 1,
+  'parent' => 'home',
+  'languages' => [ 'cs', 'en' ],
+  'source_cs' => { 'file' => 'news_rss.xml', 'dest' => 'news_rss.xml' },
+  'source_en' => { 'file' => 'news_rss.xml', 'dest' => 'en/news_rss.xml' },
+  'name_en' => 'News',
+  'name_cs' => 'Novinky',
+  'title_en' => 'News',
+  'title_cs' => 'Novinky',
+  'desc_en' => 'What\'s new.',
+  'desc_cs' => 'Co je nového.',
+  'keywords_en' => 'news, RSS',
+  'keywords_cs' => 'novinky, RSS',
+};
+$resource{'news_20041216_1'} = {
+  'type' => 'xnews',
+  'news_page' => 1,
+  'date_en' => '2004/12/16',
+  'date_cs' => '16.12.2004',
+  'desc_en' => '@about: Information about pages@ (created).',
+  'desc_cs' => '@about: Informace o stránkách@ (vytvoøeno).',
+};
+
+sub html_br () {
+  return '<br/>';
+}
+
+sub html_p () {
+  return '<p>';
+}
+
+sub html_p_e () {
+  return '</p>';
+}
+
+sub html_li () {
+  return '<li>';
+}
+
+sub html_li_e () {
+  return '</li>';
+}
+
+sub html_ul () {
+  return '<ul>';
+}
+
+sub html_ul_e () {
+  return '</ul>';
+}
+
+sub html_a ($$) {
+  my ($href, $name) = @_;
+  return '<a href="'.$href.'">'.$name.'</a>';
+}
+
+sub html_img ($$) {
+  my ($src, $alt) = @_;
+  return '<img src="'.$src.'" alt="'.$alt.'"/>';
+}
+
+sub html_a_img ($$$) {
+  my ($href, $src, $alt) = @_;
+  return '<a href="'.$href.'"><img src="'.$src.'" alt="'.$alt.'"/></a>';
+}
+
+sub xml_elem ($) {
+  my ($name) = @_;
+  return '<'.$name.'/>';
+}
+
+sub xml_pair ($) {
+  my ($name) = @_;
+  return '<'.$name.'>';
+}
+
+sub xml_pair_end ($) {
+  my ($name) = @_;
+  return '</'.$name.'>';
+}
+
+sub entitize_html ($) {
+  my ($text) = @_;
+  $text =~ s/</&lt;/g;
+  $text =~ s/>/&gt;/g;
+  $text =~ s/&/&amp;/g;
+  return $text;
+}
+
+sub file_name ($) {
+  my ($path) = @_;
+  return ($path =~ m,/([^/]*)$,)[0];
+}
+
+sub min ($$) {
+  my ($a, $b) = @_;
+  return ($a < $b) ? $a : $b;
+}
+
+sub cmp_version ($$) {
+  my ($a, $b) = @_;
+  
+  my @a = split(/\./, $a);
+  my @b = split(/\./, $b);
+  for (my $i = 0; $i < min (@a, @b); $i++) {
+    $a = $a[$i];
+    $b = $b[$i];
+    ($na, $ta) = ($a =~ /^(\d*)(\D*)$/);
+    ($nb, $tb) = ($b =~ /^(\d*)(\D*)$/);
+    my $c = ($na <=> $nb);
+    return $c if ($c != 0);
+    $c = ($ta cmp $tb);
+    return $c if ($c != 0);
+  }
+  return @a <=> @b;
+}
+
+sub cmp_version_desc ($$) {
+  my ($a, $b) = @_;
+  return cmp_version ($b, $a);
+}
+
+sub reorder (\@@) {
+  my ($order_ref, @data) = @_;
+  
+  my @order = ();
+  if (defined $order_ref) {
+    @order = @{$order_ref};
+  }
+  local %order = ();
+  for (my $i = 0; $i < @order; $i++) {
+    my $o = $order[$i];
+    $order{$o} = $i;
+  }
+  sub reorder_pos ($) {
+    my ($res) = @_;
+    if (exists $order{$res}) {
+      return $order{$res};
+    }
+    return scalar (keys %order);
+  }
+  return sort { reorder_pos($a) <=> reorder_pos($b) } @data;
+}
+
+sub site_map ($);
+sub site_map ($) {
+  my ($parent) = @_;
+  my $ret = '<ul class="resourcelist">'."\n";
+  foreach $res (matching('parent', $parent)) {
+    $ret .= '<li><a href="'.location($res).'">'.data('title', $res).'</a>';
+    my $has_local_lang = 0;
+    foreach $lang (@{data('languages', $res)}) {
+      if ($lang eq language()) {
+        $has_local_lang = 1;
+        last;
+      }
+    }
+    if (!$has_local_lang) {
+      $ret .= ' (';
+      foreach $lang (@{data('languages', $res)}) {
+        $ret .= data('text_only_'.$lang);
+      }
+      $ret .= ')';
+    }
+    $ret .= "<br/>\n";
+    $ret .= '<p class="description">'."\n";
+    $ret .= data('desc', $res)."\n";
+    $ret .= '</p>'."\n";
+    $ret .= site_map ($res);
+    $ret .= '</li>'."\n";
+  }
+  $ret .= '</ul>'."\n";
+  return $ret;
+}
+
+1;

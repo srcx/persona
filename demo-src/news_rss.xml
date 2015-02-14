@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- $Id: news_rss.xml,v 1.1 2004/12/16 14:03:01 stepan Exp $ -->
+<rss version="0.92">
+  <channel>
+    <title><? data ('main_title') ?>Main Title<?/?> - <? data ('title') ?>Title<?/?></title>
+    <link><? abs_location (data ('deployment_url'), 'news') ?>http://demo.web.example<?/?></link>
+    <description><? data ('description') ?>Description<?/?></description>
+    <language><? language() ?>en<?/?></language>
+    <lastBuildDate><? localtime () ?>Date<?/?></lastBuildDate>
+    <webMaster><? data ('webmaster') ?>webmaster@srnet.cz<?/?></webMaster>
+    <? my $ret = '';
+       my $i = 1;
+       foreach $res (sort { $b cmp $a } matching('news_page', 1)) {
+         last if ($i++ == 10);
+         $ret .= xml_pair ('item')."\n";
+         my $desc = data ('desc', $res);
+         my @links = ();
+         $desc =~ s/@([^:@]*)(?::([^@]*))?@/push (@links, $1), ((defined $2) ? $2 : data ('title', $1))/ge;
+         $ret .= xml_pair ('title')."\n";
+         $ret .= $desc."\n";
+         $ret .= xml_pair_end ('title')."\n";
+         foreach $link (@links) {
+           $ret .= xml_pair ('link').abs_location (data ('deployment_url'), $link).xml_pair_end ('link')."\n";
+         }
+         $ret .= xml_pair ('description')."\n";
+         $ret .= '[' . data ('date', $res) . '] ' . $desc."\n";
+         $ret .= xml_pair_end ('description')."\n";
+         $ret .= xml_pair_end ('item')."\n";
+       }
+       $ret;
+    ?>
+      <item>
+        <title>
+          News item.
+        </title>
+        <link>
+          Link(s) from news item.
+        </link>
+        <description>
+          [Date] News item.
+        </description>
+      </item>
+    <?/?>
+  </channel>
+</rss>
