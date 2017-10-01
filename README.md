@@ -1,5 +1,7 @@
 # Persona
 
+**Warning: unmaintained since 2004!**
+
 Persona is personal pages generator. See demonstration example in demo-src
 subdirectory. Script demo.sh will create directory demo with generated demo
 pages.
